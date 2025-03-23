@@ -2,15 +2,16 @@
 
 This project demonstrates a **real-time data ingestion pipeline** using **Amazon S3**, **Snowflake**, and **Snowpipe**, culminating in a **live dashboard** built with **Tableau**.
 
+📊 **[View Final Dashboard on Tableau Public →](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)**
+
 ## 🧩 Architecture Overview
 
-```mermaid
-flowchart TD
-  A[S3 Bucket (CSV Upload)] --> B[SQS Notification]
-  B --> C[Snowpipe in Snowflake]
-  C --> D[Sales Data Table]
-  D --> E[Live Tableau Dashboard]
-```
+**Data Flow:**
+1. S3 Bucket (CSV Upload)
+2. SQS Notification
+3. Snowpipe in Snowflake
+4. Sales Data Table
+5. Live Tableau Dashboard
 
 ## 📁 Folder Structure
 
