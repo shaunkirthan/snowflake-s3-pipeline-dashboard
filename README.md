@@ -7,11 +7,11 @@ This project demonstrates a **real-time data ingestion pipeline** using **Amazon
 ## 🧩 Architecture Overview
 
 ```mermaid
-graph TD;
-  A[S3 Bucket (CSV Upload)] --> B[SQS Notification];
-  B --> C[Snowpipe in Snowflake];
-  C --> D[Sales Data Table];
-  D --> E[Live Tableau Dashboard];
+flowchart TD
+  A[S3 Bucket (CSV Upload)] --> B[SQS Notification]
+  B --> C[Snowpipe in Snowflake]
+  C --> D[Sales Data Table]
+  D --> E[Live Tableau Dashboard]
 ```
 
 ## 📁 Folder Structure
