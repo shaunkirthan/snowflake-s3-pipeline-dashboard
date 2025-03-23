@@ -1,111 +1,130 @@
 # ❄️ Real-Time Sales Data Pipeline: S3 → Snowflake → Tableau
 
-This project demonstrates a **real-time data ingestion pipeline** using **Amazon S3**, **Snowflake**, and **Snowpipe**, culminating in a **live dashboard** built with **Tableau**. 
+This project demonstrates a **real-time data ingestion pipeline** using **Amazon S3**, **Snowflake**, and **Snowpipe**, culminating in a **live dashboard** built with **Tableau**.
 
-📊 [View Final Dashboard on Tableau Public »](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)
+📊 **[View Final Dashboard on Tableau Public →](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)**
 
 ---
 
 ## 🧩 Architecture Overview
 
 ```mermaid
-graph TD
-  A[S3 Bucket (CSV Upload)] -->|Auto-trigger| B(SQS Notification)
-  B --> C(Snowpipe in Snowflake)
-  C --> D{Sales Data Table}
-  D --> E[Live Tableau Dashboard]
-🚀 Key Components
-🔹 Amazon S3
-Stores incoming sales data in .csv format.
+graph TD;
+  A[S3 Bucket (CSV Upload)] -->|Auto-trigger| B(SQS Notification);
+  B --> C[Snowpipe in Snowflake];
+  C --> D{Sales Data Table};
+  D --> E[Live Tableau Dashboard];
+```
 
-Triggers an event every time a new file is uploaded.
+---
 
-🔹 Snowflake
-Storage Integration securely connects to S3.
+## 🚀 Key Components
 
-Stage reads raw data from S3.
+### 🔹 Amazon S3
+- Stores incoming sales data in `.csv` format.
+- Triggers an event every time a new file is uploaded via S3 Event Notifications.
 
-Snowpipe ingests data automatically on file upload.
+### 🔹 Snowflake
+- `STORAGE INTEGRATION` securely connects to S3.
+- `STAGE` references the S3 bucket.
+- `FILE FORMAT` defines CSV parsing rules.
+- `TABLE` stores the structured, queryable sales data.
+- `SNOWPIPE` auto-ingests files upon upload using SQS notifications.
 
-Table stores structured, queryable data.
+### 🔹 Tableau
+- Connects live to the Snowflake `sales_data` table.
+- Visualizes sales insights like trends, products, and customer behaviors.
 
-File Format ensures correct parsing of the CSV.
+---
 
-🔹 Tableau
-Connects to Snowflake as a live data source.
+## 📄 Dataset
 
-Creates interactive visualizations using ingested data.
+A synthetic dataset with 1,000 rows and the following columns:
 
-📄 Dataset
-A synthetic dataset with 1,000 sales records. Sample columns include:
+- `order_id`
+- `customer_name`
+- `product`
+- `price`
+- `date`
 
-order_id
+📁 **[Download sample_sales_data.xlsx](sandbox:/mnt/data/sample_sales_data.xlsx)**
 
-customer_name
+---
 
-product
+## 🧪 What I Did – Step-by-Step
 
-price
+### ✅ Snowflake Setup
 
-date
+1. Created a **secure S3 integration** using `STORAGE_INTEGRATION`.
+2. Defined a **Stage** that references the S3 bucket.
+3. Created a **table** (`sales_data`) to store ingested records.
+4. Built a **file format** with CSV rules (delimiter, skip headers, null handling).
+5. Created a **Snowpipe** for **auto-ingestion** of new S3 files.
+6. Configured **S3 Event Notifications** to send `PUT` events to **SQS**.
+7. **Manually loaded historical data** using `COPY INTO`.
 
-📁 Download sample_sales_data.xlsx
+> 💡 **Why**: This enables a **scalable, near real-time ingestion pipeline** that requires no manual file processing.
 
-🧪 Steps & What I Did
-✅ Snowflake Setup
-Created a secure S3 integration using STORAGE_INTEGRATION.
+---
 
-Defined a Stage to point to the bucket using that integration.
+### 📈 Tableau Integration
 
-Created a table to store structured sales data.
+- Connected Tableau directly to the Snowflake `sales_data` table.
+- Built an interactive dashboard to analyze:
+  - 📅 Sales over time
+  - 📦 Product performance
+  - 👤 Customer trends
+- Published the dashboard to Tableau Public.
 
-Defined a CSV file format that matches incoming files.
+🔗 **[Live Dashboard](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)**
 
-Built a Snowpipe to enable auto-ingestion from S3.
+---
 
-Set up S3 Event Notifications (via SQS) to trigger the pipe.
+## 🛠️ Technologies Used
 
-Manually loaded historical data once using COPY INTO.
+- **Snowflake** – Cloud data warehouse, Snowpipe automation
+- **Amazon S3 + SQS** – Object storage and event-driven triggers
+- **Tableau** – Interactive BI and dashboarding
+- **Python & Faker** – Sample data generation
+- **SQL** – Table, Stage, Snowpipe configuration
 
-✅ Why: This pipeline eliminates manual uploads and ensures scalable, near real-time ingestion of sales data with minimal operational overhead.
+---
 
-📈 Tableau Integration
-Connected Tableau directly to the Snowflake sales_data table.
+## 📌 Why This Project Matters
 
-Built an interactive dashboard tracking:
+✅ Real-world pipelines rarely involve manual imports  
+✅ Snowpipe showcases **event-driven automation**  
+✅ Tableau proves the **end-to-end flow** from raw data to insight  
+✅ It's **cloud-native**, **scalable**, and **production-ready**
 
-Sales volume over time
+---
 
-Product popularity
+## 🔄 Future Enhancements
 
-Customer purchasing trends
+- Add data quality checks with **Snowflake Tasks or Streams**
+- Maintain audit logs of ingestions
+- Support **multi-region S3 buckets**
+- Orchestrate full pipeline with **Apache Airflow**
 
-Published the dashboard to Tableau Public.
+---
 
-🔗 Live Dashboard
+## 🙋‍♂️ Author
 
-🛠️ Technologies Used
-Snowflake: Data warehouse, Snowpipe automation
+**Shaun Kirthan**  
+M.S. in Data Analytics Engineering, Northeastern University  
+🔗 [LinkedIn](#) | 🧠 Passionate about cloud data pipelines, automation, and analytics
 
-Amazon S3 + SQS: Object storage and trigger system
+---
+```
 
-Tableau: BI and dashboarding
+---
 
-Python & Faker: For generating sample datasets
+### ✅ Next Steps
 
-SQL: For pipeline configuration and data management
+Let me know if you'd like:
+- A `.zip` file with everything (`README.md`, sample Excel, SQL setup)
+- An image version of the architecture diagram
+- A Markdown-to-PDF version for resume/portfolio
+- Help turning this into a blog or LinkedIn post
 
-📌 Why This Project Matters
-✅ Real-world pipelines rarely involve manual imports.
-✅ Snowpipe showcases event-driven automation.
-✅ Tableau integration proves the end-to-end flow, from raw data to insights.
-✅ It's cloud-native, scalable, and production-worthy.
-
-🔄 Future Enhancements
-Add data quality checks using Snowflake Tasks or Streams.
-
-Log ingestion events for auditing.
-
-Scale to multi-region S3 bucket ingestion.
-
-Integrate with Apache Airflow for orchestrated workflows.
+You're all set to showcase this on GitHub or as a portfolio project!
