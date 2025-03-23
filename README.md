@@ -10,10 +10,23 @@ This project demonstrates a **real-time data ingestion pipeline** using **Amazon
 
 ```mermaid
 graph TD;
-  A[S3 Bucket (CSV Upload)] -->|Auto-trigger| B(SQS Notification);
+  A[S3 Bucket (CSV Upload)] --> B[SQS Notification];
   B --> C[Snowpipe in Snowflake];
-  C --> D{Sales Data Table};
+  C --> D[Sales Data Table];
   D --> E[Live Tableau Dashboard];
+```
+
+---
+
+## 📁 Folder Structure
+
+```
+real-time-sales-data-pipeline/
+├── README.md
+├── setup.sql
+├── sample_sales_data.xlsx
+└── docs/
+    └── architecture_diagram.png (optional)
 ```
 
 ---
@@ -26,20 +39,20 @@ graph TD;
 
 ### 🔹 Snowflake
 - `STORAGE INTEGRATION` securely connects to S3.
-- `STAGE` references the S3 bucket.
-- `FILE FORMAT` defines CSV parsing rules.
-- `TABLE` stores the structured, queryable sales data.
-- `SNOWPIPE` auto-ingests files upon upload using SQS notifications.
+- `STAGE` reads data directly from the bucket.
+- `FILE FORMAT` parses CSV format correctly.
+- `TABLE` holds structured sales data.
+- `SNOWPIPE` listens for new files and ingests them automatically.
 
 ### 🔹 Tableau
-- Connects live to the Snowflake `sales_data` table.
-- Visualizes sales insights like trends, products, and customer behaviors.
+- Connected live to the `sales_data` table in Snowflake.
+- Provides interactive dashboards visualizing the ingested data.
 
 ---
 
 ## 📄 Dataset
 
-A synthetic dataset with 1,000 rows and the following columns:
+A synthetic dataset with 1,000 sales records:
 
 - `order_id`
 - `customer_name`
@@ -47,7 +60,7 @@ A synthetic dataset with 1,000 rows and the following columns:
 - `price`
 - `date`
 
-📁 **[Download sample_sales_data.xlsx](sandbox:/mnt/data/sample_sales_data.xlsx)**
+📥 **[Download sample_sales_data.xlsx](sandbox:/mnt/data/sample_sales_data.xlsx)**
 
 ---
 
@@ -55,26 +68,26 @@ A synthetic dataset with 1,000 rows and the following columns:
 
 ### ✅ Snowflake Setup
 
-1. Created a **secure S3 integration** using `STORAGE_INTEGRATION`.
-2. Defined a **Stage** that references the S3 bucket.
-3. Created a **table** (`sales_data`) to store ingested records.
-4. Built a **file format** with CSV rules (delimiter, skip headers, null handling).
-5. Created a **Snowpipe** for **auto-ingestion** of new S3 files.
-6. Configured **S3 Event Notifications** to send `PUT` events to **SQS**.
-7. **Manually loaded historical data** using `COPY INTO`.
+1. Created a **Storage Integration** to securely access S3.
+2. Created a **Stage** pointing to the S3 bucket.
+3. Defined a **File Format** to interpret CSV structure.
+4. Created a **sales_data table** to store ingested data.
+5. Built a **Snowpipe** for automated ingestion triggered by S3 file uploads.
+6. Configured **S3 → SQS notifications** to notify Snowpipe.
+7. **Manually loaded historical data** using `COPY INTO` for initial setup.
 
-> 💡 **Why**: This enables a **scalable, near real-time ingestion pipeline** that requires no manual file processing.
+> 💡 **Why:** This setup removes manual steps and enables automated, near real-time ingestion of structured sales data.
 
 ---
 
 ### 📈 Tableau Integration
 
-- Connected Tableau directly to the Snowflake `sales_data` table.
-- Built an interactive dashboard to analyze:
-  - 📅 Sales over time
-  - 📦 Product performance
-  - 👤 Customer trends
-- Published the dashboard to Tableau Public.
+- Connected Tableau to Snowflake’s `sales_data` table.
+- Built an interactive dashboard to visualize:
+  - Sales volume over time
+  - Most purchased products
+  - Top customers and trends
+- Published to Tableau Public for sharing and access.
 
 🔗 **[Live Dashboard](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)**
 
@@ -82,49 +95,28 @@ A synthetic dataset with 1,000 rows and the following columns:
 
 ## 🛠️ Technologies Used
 
-- **Snowflake** – Cloud data warehouse, Snowpipe automation
-- **Amazon S3 + SQS** – Object storage and event-driven triggers
-- **Tableau** – Interactive BI and dashboarding
-- **Python & Faker** – Sample data generation
-- **SQL** – Table, Stage, Snowpipe configuration
+- **Snowflake** – Cloud Data Warehouse with Snowpipe
+- **Amazon S3** – Object Storage
+- **Amazon SQS** – Notification Service
+- **Tableau** – Business Intelligence & Dashboards
+- **Python & Faker** – For dataset generation
+- **SQL** – For setup and data loading
 
 ---
 
 ## 📌 Why This Project Matters
 
-✅ Real-world pipelines rarely involve manual imports  
-✅ Snowpipe showcases **event-driven automation**  
-✅ Tableau proves the **end-to-end flow** from raw data to insight  
-✅ It's **cloud-native**, **scalable**, and **production-ready**
+✅ Automates the data pipeline  
+✅ Demonstrates real-world event-driven ingestion  
+✅ Eliminates manual file handling  
+✅ Ends with clean, interactive visualizations  
+✅ Fully cloud-native and scalable
 
 ---
 
 ## 🔄 Future Enhancements
 
-- Add data quality checks with **Snowflake Tasks or Streams**
-- Maintain audit logs of ingestions
-- Support **multi-region S3 buckets**
-- Orchestrate full pipeline with **Apache Airflow**
-
----
-
-## 🙋‍♂️ Author
-
-**Shaun Kirthan**  
-M.S. in Data Analytics Engineering, Northeastern University  
-🔗 [LinkedIn](#) | 🧠 Passionate about cloud data pipelines, automation, and analytics
-
----
-```
-
----
-
-### ✅ Next Steps
-
-Let me know if you'd like:
-- A `.zip` file with everything (`README.md`, sample Excel, SQL setup)
-- An image version of the architecture diagram
-- A Markdown-to-PDF version for resume/portfolio
-- Help turning this into a blog or LinkedIn post
-
-You're all set to showcase this on GitHub or as a portfolio project!
+- Add data validation or cleanup via **Snowflake Streams or Tasks**
+- Enable logging of ingestion events for auditing
+- Expand to multi-region S3 ingestion support
+- Use **Apache Airflow** for full pipeline orchestration
