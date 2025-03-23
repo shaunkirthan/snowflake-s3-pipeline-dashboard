@@ -4,8 +4,6 @@ This project demonstrates a **real-time data ingestion pipeline** using **Amazon
 
 📊 **[View Final Dashboard on Tableau Public →](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)**
 
----
-
 ## 🧩 Architecture Overview
 
 ```mermaid
@@ -16,8 +14,6 @@ graph TD;
   D --> E[Live Tableau Dashboard];
 ```
 
----
-
 ## 📁 Folder Structure
 
 ```
@@ -26,33 +22,29 @@ real-time-sales-data-pipeline/
 ├── setup.sql
 ├── sample_sales_data.xlsx
 └── docs/
-    └── architecture_diagram.png (optional)
+    └── architecture_diagram.png
 ```
-
----
 
 ## 🚀 Key Components
 
 ### 🔹 Amazon S3
-- Stores incoming sales data in `.csv` format.
-- Triggers an event every time a new file is uploaded via S3 Event Notifications.
+- Stores incoming sales data in `.csv` format
+- Triggers an event every time a new file is uploaded via S3 Event Notifications
 
 ### 🔹 Snowflake
-- `STORAGE INTEGRATION` securely connects to S3.
-- `STAGE` reads data directly from the bucket.
-- `FILE FORMAT` parses CSV format correctly.
-- `TABLE` holds structured sales data.
-- `SNOWPIPE` listens for new files and ingests them automatically.
+- `STORAGE INTEGRATION` securely connects to S3
+- `STAGE` reads data directly from the bucket
+- `FILE FORMAT` parses CSV format correctly
+- `TABLE` holds structured sales data
+- `SNOWPIPE` listens for new files and ingests them automatically
 
 ### 🔹 Tableau
-- Connected live to the `sales_data` table in Snowflake.
-- Provides interactive dashboards visualizing the ingested data.
-
----
+- Connected live to the `sales_data` table in Snowflake
+- Provides interactive dashboards visualizing the ingested data
 
 ## 📄 Dataset
 
-A synthetic dataset with 1,000 sales records:
+A synthetic dataset with 1,000 sales records containing:
 
 - `order_id`
 - `customer_name`
@@ -60,38 +52,30 @@ A synthetic dataset with 1,000 sales records:
 - `price`
 - `date`
 
-📥 **[Download sample_sales_data.xlsx](sandbox:/mnt/data/sample_sales_data.xlsx)**
-
----
-
-## 🧪 What I Did – Step-by-Step
+## 🧪 Implementation Steps
 
 ### ✅ Snowflake Setup
 
-1. Created a **Storage Integration** to securely access S3.
-2. Created a **Stage** pointing to the S3 bucket.
-3. Defined a **File Format** to interpret CSV structure.
-4. Created a **sales_data table** to store ingested data.
-5. Built a **Snowpipe** for automated ingestion triggered by S3 file uploads.
-6. Configured **S3 → SQS notifications** to notify Snowpipe.
-7. **Manually loaded historical data** using `COPY INTO` for initial setup.
+1. Created a **Storage Integration** to securely access S3
+2. Created a **Stage** pointing to the S3 bucket
+3. Defined a **File Format** to interpret CSV structure
+4. Created a **sales_data table** to store ingested data
+5. Built a **Snowpipe** for automated ingestion triggered by S3 file uploads
+6. Configured **S3 → SQS notifications** to notify Snowpipe
+7. **Manually loaded historical data** using `COPY INTO` for initial setup
 
 > 💡 **Why:** This setup removes manual steps and enables automated, near real-time ingestion of structured sales data.
 
----
-
 ### 📈 Tableau Integration
 
-- Connected Tableau to Snowflake’s `sales_data` table.
+- Connected Tableau to Snowflake's `sales_data` table
 - Built an interactive dashboard to visualize:
   - Sales volume over time
   - Most purchased products
   - Top customers and trends
-- Published to Tableau Public for sharing and access.
+- Published to Tableau Public for sharing and access
 
 🔗 **[Live Dashboard](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)**
-
----
 
 ## 🛠️ Technologies Used
 
@@ -102,17 +86,13 @@ A synthetic dataset with 1,000 sales records:
 - **Python & Faker** – For dataset generation
 - **SQL** – For setup and data loading
 
----
+## 📌 Project Benefits
 
-## 📌 Why This Project Matters
-
-✅ Automates the data pipeline  
-✅ Demonstrates real-world event-driven ingestion  
-✅ Eliminates manual file handling  
-✅ Ends with clean, interactive visualizations  
-✅ Fully cloud-native and scalable
-
----
+- Automates the data pipeline
+- Demonstrates real-world event-driven ingestion
+- Eliminates manual file handling
+- Ends with clean, interactive visualizations
+- Fully cloud-native and scalable
 
 ## 🔄 Future Enhancements
 
@@ -120,3 +100,9 @@ A synthetic dataset with 1,000 sales records:
 - Enable logging of ingestion events for auditing
 - Expand to multi-region S3 ingestion support
 - Use **Apache Airflow** for full pipeline orchestration
+
+## 🙋‍♂️ Author
+
+**Shaun Kirthan**  
+M.S. in Data Analytics Engineering, Northeastern University  
+🔗 [LinkedIn](https://linkedin.com/in/shaunkirthan) | Data Engineer passionate about cloud pipelines, analytics, and automation
