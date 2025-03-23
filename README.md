@@ -2,8 +2,6 @@
 
 This project demonstrates a **real-time data ingestion pipeline** using **Amazon S3**, **Snowflake**, and **Snowpipe**, culminating in a **live dashboard** built with **Tableau**.
 
-📊 **[View Final Dashboard on Tableau Public →](https://public.tableau.com/app/profile/shaun.kirthan/viz/Book2_17131246219240/Dashboard1)**
-
 ## 🧩 Architecture Overview
 
 ```mermaid
